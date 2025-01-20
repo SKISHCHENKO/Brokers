@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS credit_applications (
+    id BIGSERIAL PRIMARY KEY,
+    amount DECIMAL NOT NULL,
+    term_months INTEGER NOT NULL,
+    monthly_income DECIMAL NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'PROCESSING',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
