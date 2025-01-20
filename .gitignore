@@ -1,0 +1,3 @@
+# Project exclude paths
+/credit-application-service/target/
+/credit-decision-service/target/
