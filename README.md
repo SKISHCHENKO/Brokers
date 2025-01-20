@@ -46,23 +46,7 @@ Kafka Consumer
 Java 17 или выше  
 Maven  
 RabbitMQ  
-Kafka  
-Шаги для запуска:  
-Клонируйте репозиторий:  
+Kafka   
 
-git clone <repository-url>  
-cd <repository-directory>  
-
-Сборка проектов:  
-
-mvn clean install  
-Запустите RabbitMQ и Kafka (если они еще не запущены).  
-
-Запустите сервисы:  
-
-Для credit-application-service:  
-cd credit-application-service  
-mvn spring-boot:run  
-Для credit-decision-service:  
-cd credit-decision-service  
-mvn spring-boot:run  
+Сборка проекта:  mvn clean install  
+Запустить docker-compose для сборки окружения
