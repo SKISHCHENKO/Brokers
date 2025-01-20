@@ -7,7 +7,6 @@ import com.example.creditapp.event.CreditDecisionEvent;
 
 
 import com.example.creditapp.model.CreditStatus;
-import com.example.creditdecision.repository.CreditDecisionRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +16,14 @@ import java.math.RoundingMode;
 @Service
 public class CreditDecisionService {
     private final RabbitTemplate rabbitTemplate;
-    private final CreditDecisionRepository repository;
 
-    public CreditDecisionService(RabbitTemplate rabbitTemplate, CreditDecisionRepository repository) {
+    public CreditDecisionService(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
-        this.repository = repository;
     }
 
     public void processApplication(CreditApplicationEvent event) {
         boolean approved = isApplicationApproved(event);
-        CreditStatus status = approved ? CreditStatus.APPROVED : CreditStatus.REJECTED;
-
-        // Обновляем статус заявки в базе данных
-        updateApplicationStatus(event.getApplicationId(), status);
+        CreditStatus status = isApplicationApproved(event) ? CreditStatus.APPROVED : CreditStatus.REJECTED;
 
         CreditDecisionEvent decisionEvent = new CreditDecisionEvent();
         decisionEvent.setApplicationId(event.getApplicationId());
@@ -38,15 +32,6 @@ public class CreditDecisionService {
 
         // Отправка решения о кредите в RabbitMQ
         rabbitTemplate.convertAndSend("credit-decisions", decisionEvent);
-    }
-
-    public void updateApplicationStatus(Long applicationId, CreditStatus status) {
-        repository.findById(applicationId).ifPresent(application -> {
-            application.setStatus(status);
-            repository.save(application);
-            // Логируем обновление статуса
-            System.out.println("Status updated for application ID: " + applicationId + " to " + status);
-        });
     }
 
     private boolean isApplicationApproved(CreditApplicationEvent event) {

@@ -1,6 +1,8 @@
 package com.example.creditapp.model;
 
-public enum CreditStatus {
+import java.io.Serializable;
+
+public enum CreditStatus implements Serializable {
     PROCESSING,
     APPROVED,
     REJECTED

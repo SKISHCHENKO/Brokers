@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  amqp:
+    deserialization:
+      trust-all: true
   datasource:
     url: jdbc:postgresql://localhost:5432/creditdb
     username: postgres
