@@ -11,6 +11,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CreditApplicationService {
@@ -48,7 +50,7 @@ public class CreditApplicationService {
                 });
     }
 
-    public CreditApplication getApplication(Long id) {
-        return repository.findById(id).orElseThrow();
+    public Optional<CreditApplication> getApplication(Long id) {
+        return repository.findById(id);
     }
 }

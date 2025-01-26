@@ -11,11 +11,9 @@ import org.springframework.stereotype.Component;
 public class CreditDecisionListener {
 
     private final CreditDecisionService creditDecisionService;
-    private final RabbitTemplate rabbitTemplate;
 
     public CreditDecisionListener(CreditDecisionService creditDecisionService, RabbitTemplate rabbitTemplate) {
         this.creditDecisionService = creditDecisionService;
-        this.rabbitTemplate = rabbitTemplate;
     }
 
     @KafkaListener(topics = "credit-applications", groupId = "credit-decision-group")

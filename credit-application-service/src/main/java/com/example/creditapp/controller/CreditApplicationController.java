@@ -27,7 +27,9 @@ public class CreditApplicationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CreditApplication> getStatus(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getApplication(id));
+        return service.getApplication(id)
+                .map(ResponseEntity::ok) // Если значение присутствует, возвращаем 200 OK
+                .orElse(ResponseEntity.notFound().build()); // Если значение отсутствует, возвращаем 404 Not Found
     }
 
 }
